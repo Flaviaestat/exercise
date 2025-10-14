@@ -1,0 +1,35 @@
+
+--- Métricas: LogisticRegression em OOT ---
+AUROC (Capac. Discriminativa): 0.9947
+Recall (Capac. p/ Capturar Falha): 0.8750
+Precision (Confiabilidade): 1.0000
+F1-Score: 0.9333
+--------------------------------------------------
+
+--- Métricas: XGBoost em OOT ---
+AUROC (Capac. Discriminativa): 0.9930
+Recall (Capac. p/ Capturar Falha): 0.7500
+Precision (Confiabilidade): 1.0000
+F1-Score: 0.8571
+--------------------------------------------------
+
+--- Métricas: LogisticRegression em OOT ---
+AUROC (Capac. Discriminativa): 0.9947
+Recall (Capac. p/ Capturar Falha): 0.8750
+Precision (Confiabilidade): 1.0000
+F1-Score: 0.9333
+--------------------------------------------------
+
+--- Métricas: XGBoost em OOT ---
+AUROC (Capac. Discriminativa): 0.9930
+Recall (Capac. p/ Capturar Falha): 0.7500
+Precision (Confiabilidade): 1.0000
+F1-Score: 0.8571
+--------------------------------------------------
+
+--- Métricas: LogisticRegression em OOT ---
+AUROC (Capac. Discriminativa): 0.9947
+Recall (Capac. p/ Capturar Falha): 0.8750
+Precision (Confiabilidade): 1.0000
+F1-Score: 0.9333
+--------------------------------------------------

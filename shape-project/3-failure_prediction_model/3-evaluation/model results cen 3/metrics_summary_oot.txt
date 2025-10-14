@@ -1,0 +1,36 @@
+
+--- Métricas Otimizadas: LogisticRegression em OOT ---
+AUROC (Capac. Discriminativa): 0.9096
+BEST THRESHOLD (Max F1): 0.9182
+--------------------------------------------------
+Recall (Capac. p/ Capturar Falha): 0.8333 (com novo threshold)
+Precision (Confiabilidade): 0.8333 (com novo threshold)
+F1-Score (Otimizado): 0.8333
+--------------------------------------------------
+
+--- Métricas Otimizadas: XGBoost em OOT ---
+AUROC (Capac. Discriminativa): 0.9108
+BEST THRESHOLD (Max F1): 0.9507
+--------------------------------------------------
+Recall (Capac. p/ Capturar Falha): 0.7500 (com novo threshold)
+Precision (Confiabilidade): 1.0000 (com novo threshold)
+F1-Score (Otimizado): 0.8571
+--------------------------------------------------
+
+--- Métricas Otimizadas: SVM em OOT ---
+AUROC (Capac. Discriminativa): 0.9079
+BEST THRESHOLD (Max F1): 0.3469
+--------------------------------------------------
+Recall (Capac. p/ Capturar Falha): 0.8333 (com novo threshold)
+Precision (Confiabilidade): 0.8333 (com novo threshold)
+F1-Score (Otimizado): 0.8333
+--------------------------------------------------
+
+--- Métricas Otimizadas: MLPClassifier em OOT ---
+AUROC (Capac. Discriminativa): 0.8685
+BEST THRESHOLD (Max F1): 0.6489
+--------------------------------------------------
+Recall (Capac. p/ Capturar Falha): 0.7500 (com novo threshold)
+Precision (Confiabilidade): 0.9000 (com novo threshold)
+F1-Score (Otimizado): 0.8182
+--------------------------------------------------

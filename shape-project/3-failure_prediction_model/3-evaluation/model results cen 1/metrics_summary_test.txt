@@ -1,0 +1,35 @@
+
+--- Métricas: LogisticRegression em Teste ---
+AUROC (Capac. Discriminativa): 0.9916
+Recall (Capac. p/ Capturar Falha): 0.9286
+Precision (Confiabilidade): 0.7222
+F1-Score: 0.8125
+--------------------------------------------------
+
+--- Métricas: XGBoost em Teste ---
+AUROC (Capac. Discriminativa): 0.9931
+Recall (Capac. p/ Capturar Falha): 0.9286
+Precision (Confiabilidade): 0.7647
+F1-Score: 0.8387
+--------------------------------------------------
+
+--- Métricas: LogisticRegression em Teste ---
+AUROC (Capac. Discriminativa): 0.9916
+Recall (Capac. p/ Capturar Falha): 0.9286
+Precision (Confiabilidade): 0.7222
+F1-Score: 0.8125
+--------------------------------------------------
+
+--- Métricas: XGBoost em Teste ---
+AUROC (Capac. Discriminativa): 0.9931
+Recall (Capac. p/ Capturar Falha): 0.9286
+Precision (Confiabilidade): 0.7647
+F1-Score: 0.8387
+--------------------------------------------------
+
+--- Métricas: LogisticRegression em Teste ---
+AUROC (Capac. Discriminativa): 0.9916
+Recall (Capac. p/ Capturar Falha): 0.9286
+Precision (Confiabilidade): 0.7222
+F1-Score: 0.8125
+--------------------------------------------------
