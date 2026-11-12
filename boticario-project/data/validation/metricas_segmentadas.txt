@@ -1,0 +1,32 @@
+
+--- Erro por tp_perfil ---
+tp_perfil  Volume_Real  MAE  WMAPE (%)
+      RUA         9864 3.41      49.73
+ SHOPPING         8416 3.49      49.75
+ COMPACTA         8362 2.95      50.76
+ QUIOSQUE         3271 2.61      57.35
+
+--- Erro por des_regiao ---
+  des_regiao  Volume_Real  MAE  WMAPE (%)
+     Sudeste        14078 3.19      48.94
+         Sul         5683 3.35      53.72
+    Nordeste         5677 3.09      52.28
+Centro-Oeste         3884 2.99      51.75
+       Norte          591 3.05      49.49
+
+--- Erro por des_categoria ---
+des_categoria  Volume_Real  MAE  WMAPE (%)
+        CORPO         9538 3.84      48.33
+    MAQUIAGEM         8369 3.53      50.58
+       CABELO         7032 3.01      51.42
+   PERFUMARIA         4974 2.30      55.38
+
+--- Erro por flg_campanha ---
+ flg_campanha  Volume_Real  MAE  WMAPE (%)
+            1        19125 4.82      46.88
+            0        10788 2.12      57.91
+
+--- Erro por flg_lancamento ---
+ flg_lancamento  Volume_Real  MAE  WMAPE (%)
+              0        24709 3.17      51.26
+              1         5204 3.18      48.94

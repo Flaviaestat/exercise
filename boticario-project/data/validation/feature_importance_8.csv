@@ -1,0 +1,17 @@
+Feature,LGBM_Importance,XGB_Importance
+cod_loja,1561,0.062278293
+cod_sku,1165,0.054842312
+flg_campanha,264,0.45462695
+tp_perfil,6,0.0
+des_regiao,1,0.0
+qt_espaco_gondola,82,0.0
+des_categoria,24,0.0
+qt_espaco,1,0.0
+vlr_preco_tabela,227,0.0
+flg_lancamento,19,0.0
+lag_1,361,0.021724373
+lag_2,299,0.020627525
+lag_3,405,0.020197952
+rolling_mean_3,848,0.3294124
+diff_1,244,0.015417267
+rolling_std_3,493,0.020872917
