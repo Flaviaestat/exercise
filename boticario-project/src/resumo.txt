@@ -82,7 +82,29 @@ Resumindo, a biblioteca roda o algoritmo Branch and Cut para lidar com as decis�
 mas ele usa o seu velho conhecido Simplex nos bastidores, acionando-o como motor de cálculo milhares de vezes em 
 frações de segundo.
 
-
 Essa abordagem foi escolhida em vez de heurísticas gulosas (greedy) pois garante matematicamente o ótimo global de 
 vendas previstas, respeitando simultaneamente todas as regras de negócio de limite de espaço, teto de lançamentos 
 e presença de categorias, além de ser 100% open-source e reproduzível.
+
+============================================================
+🚀 RESULTADOS EXECUTIVOS: GULOSO VS. OTIMIZADOR (PuLP)
+============================================================
+📈 Venda Projetada (Intuição/Guloso): 17053.65 unidades
+🏆 Venda Projetada (Otimizador PuLP):  16994.68 unidades
+🔥 UPLIFT (Ganho de Vendas):          +-0.35%
+------------------------------------------------------------
+📦 Ocupação Média (Guloso):           100.0% (Gera espaço ocioso)
+📦 Ocupação Média (PuLP):             100.0% (Uso perfeito)
+------------------------------------------------------------
+⚠️ AVISO DE GOVERNANÇA (Trade Marketing):
+O método guloso violou a regra de categorias (deixou de expor
+alguma categoria obrigatória) em 95 lojas.
+O PuLP manteve 100% de compliance com as regras.
+============================================================
+
+
+Projeto de LLM
+
+Escolhi o GPT-4o-mini porque o raciocínio matemático já está blindado no backend com Python; precisávamos apenas 
+de um motor de renderização de texto rápido, compatível com saídas 
+estruturadas JSON (Pydantic) e com o menor custo por token para escalar essa solução para toda a rede de franquias.

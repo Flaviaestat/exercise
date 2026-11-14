@@ -25,16 +25,12 @@ class GondolaOptimization:
             x = pulp.LpVariable.dicts("SKU", skus, cat='Binary')
         
         # 3. Função Objetivo: Maximizar a soma das vendas previstas
-        # Convertendo para float nativo para evitar conflitos de numpy types
         vendas = {k: float(v) for k, v in zip(skus, df_loja['qt_venda_prevista'])}
         prob += pulp.lpSum([vendas[i] * x[i] for i in skus]), "Max_Vendas"
         
         # 4. Restrições
         espacos = {k: float(v) for k, v in zip(skus, df_loja['qt_espaco'])}
-        
-        # CORREÇÃO AQUI: Converter numpy.int64 para int nativo do Python
         espaco_gondola = int(df_loja['qt_espaco_gondola'].iloc[0])
-        
         prob += pulp.lpSum([espacos[i] * x[i] for i in skus]) <= espaco_gondola, "Restricao_Espaco"
         
         lancamentos = {k: int(v) for k, v in zip(skus, df_loja['flg_lancamento'])}
@@ -45,13 +41,13 @@ class GondolaOptimization:
         for cat in categorias:
             prob += pulp.lpSum([x[i] for i in skus_por_categoria[cat]]) >= 1, f"Restricao_Categoria_{cat}"
             
-        # 5. Resolver o problema silenciosamente
+        # 5. Resolver o problema
         try:
             if pulp_v4:
                 prob.solve(pulp.COIN_CMD(msg=False))
             else:
                 prob.solve(pulp.PULP_CBC_CMD(msg=False))
-        except Exception as e:
+        except Exception:
             prob.solve()
         
         # 6. Coletar os SKUs selecionados
@@ -79,20 +75,40 @@ class GondolaOptimization:
                 
         df_gondola = pd.DataFrame(resultados)
         
-        # Validação cruzada rápida
-        df_verificacao = df_gondola.merge(self.df[['cod_loja', 'cod_sku', 'qt_espaco', 'qt_espaco_gondola']], on=['cod_loja', 'cod_sku'], how='left')
-        espaco_utilizado = df_verificacao.groupby('cod_loja')['qt_espaco'].sum()
-        limites = df_verificacao.groupby('cod_loja')['qt_espaco_gondola'].first()
+        # NOVO: Relatório de Auditoria e Taxa de Ocupação
+        df_verificacao = df_gondola.merge(
+            self.df[['cod_loja', 'cod_sku', 'qt_espaco', 'qt_espaco_gondola', 'qt_venda_prevista']], 
+            on=['cod_loja', 'cod_sku'], 
+            how='left'
+        )
         
-        violacoes = espaco_utilizado > limites
-        if violacoes.any():
-            print(f"\nAVISO: {violacoes.sum()} lojas violaram o limite de espaço!")
+        # Agregando os resultados por loja
+        df_auditoria = df_verificacao.groupby('cod_loja').agg(
+            skus_distintos=('cod_sku', 'count'),
+            espaco_utilizado=('qt_espaco', 'sum'),
+            espaco_limite=('qt_espaco_gondola', 'first'),
+            venda_projetada=('qt_venda_prevista', 'sum')
+        ).reset_index()
+        
+        # Calculando a métrica de ocupação
+        df_auditoria['taxa_ocupacao_%'] = (df_auditoria['espaco_utilizado'] / df_auditoria['espaco_limite'] * 100).round(1)
+        
+        # Verificando se houve violação
+        violacoes = df_auditoria[df_auditoria['taxa_ocupacao_%'] > 100]
+        if not violacoes.empty:
+            print(f"\nAVISO: {len(violacoes)} lojas violaram o limite de espaço!")
         else:
-            print("\nSucesso! Todas as lojas respeitaram o limite de espaço e restrições.")
+            print(f"\nSucesso! Todas as lojas respeitaram o limite. Ocupação média: {df_auditoria['taxa_ocupacao_%'].mean():.1f}%")
         
+        # Exportando os arquivos
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         df_gondola.to_csv(self.output_path, index=False)
-        print(f"Arquivo da gôndola (Opcional 1) salvo em: {self.output_path}")
+        
+        caminho_auditoria = self.output_path.replace("gondola_202609.csv", "auditoria_gondola.csv")
+        df_auditoria.to_csv(caminho_auditoria, index=False)
+        
+        print(f"Lista de SKUs da gôndola salva em: {self.output_path}")
+        print(f"Relatório de Auditoria (Taxa de Ocupação) salvo em: {caminho_auditoria}")
         
         return df_gondola
 

@@ -1,4 +1,3 @@
-
 import pandas as pd
 import lightgbm as lgb
 from xgboost import XGBRegressor
@@ -23,16 +22,20 @@ class ModelTraining:
         self.max_nr_ordem = self.df_train["nr_ordem"].max()
         self.target_ciclo = self.df_test["cod_ciclo"].iloc[0]
         
-        cat_cols = ["cod_loja", "cod_sku", "tp_perfil", "des_regiao", "des_categoria"]
+        # Removidos cod_loja e cod_sku do casting (não serão features)
+        cat_cols = ["tp_perfil", "des_regiao", "des_categoria"]
         for col in cat_cols:
-            self.df_train[col] = self.df_train[col].astype("category")
-            self.df_test[col] = self.df_test[col].astype("category")
+            if col in self.df_train.columns:
+                self.df_train[col] = self.df_train[col].astype("category")
+            if col in self.df_test.columns:
+                self.df_test[col] = self.df_test[col].astype("category")
             
     def train_validate(self):
         print(f"\n=== Validacao Temporal (Treino: <= {self.max_nr_ordem - 1}, Teste: {self.max_nr_ordem}) ===")
         
+        # Removidos cod_loja e cod_sku das features preditivas
         features = [
-            "cod_loja", "cod_sku", "flg_campanha", "tp_perfil", "des_regiao", 
+            "flg_campanha", "tp_perfil", "des_regiao", 
             "qt_espaco_gondola", "des_categoria", "qt_espaco", "vlr_preco_tabela", 
             "flg_lancamento", "lag_1", "lag_2", "lag_3", "rolling_mean_3", "diff_1", "rolling_std_3"
         ]
@@ -68,9 +71,11 @@ class ModelTraining:
         df_val_results.to_csv(val_path, index=False)
         
         # Exportando Importancia das Variaveis para o Evaluation plotar
+
         df_imp = pd.DataFrame({
             'Feature': features,
-            'LGBM_Importance': model_lgb.feature_importances_,
+            # Forçamos o LightGBM a usar 'gain' em vez do padrão 'split'
+            'LGBM_Importance': model_lgb.booster_.feature_importance(importance_type='gain'),
             'XGB_Importance': model_xgb.feature_importances_
         })
         imp_path = f"../data/validation/feature_importance_{self.max_nr_ordem}.csv"

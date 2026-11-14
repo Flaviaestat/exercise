@@ -1,7 +1,0 @@
-├── src/                   # Arquivos .py para execução modularizada
-│   ├── __init__.py
-│   ├── data_prep.py       # Funções de limpeza e unificação
-│   ├── features.py        # Funções para gerar e reconstituir variáveis
-│   ├── eda_utils.py       # Scripts de plotagem (como o abaixo)
-│   ├── train.py           # Pipeline de treino e validação cruzada
-│   └── optimization.py    # Algoritmo de escolha da gôndola (Opcional 1)

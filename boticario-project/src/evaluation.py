@@ -179,9 +179,49 @@ class ModelEvaluation:
         print(f"Plots salvos na pasta de validacao.")
         plt.close()
 
+    def plot_actual_vs_predicted(self, df_val, num_lojas=4):
+        print(f"\nGerando plots Previsto x Real para {num_lojas} lojas aleatorias...")
+        # Seleciona algumas lojas aleatorias que tiveram vendas
+        lojas_com_venda = df_val[df_val["qt_venda"] > 0]["cod_loja"].unique()
+        lojas_amostra = np.random.choice(lojas_com_venda, min(num_lojas, len(lojas_com_venda)), replace=False)
+        
+        sns.set_theme(style="whitegrid")
+        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+        axes = axes.flatten()
+        
+        for i, loja in enumerate(lojas_amostra):
+            df_loja = df_val[df_val["cod_loja"] == loja].copy()
+            # Ordena por qt_venda para o plot ficar mais legivel
+            df_loja = df_loja.sort_values(by="qt_venda", ascending=False).reset_index(drop=True)
+            # Limita a 20 produtos para nao poluir
+            df_loja = df_loja.head(20)
+            
+            ax = axes[i]
+            x = np.arange(len(df_loja))
+            width = 0.25
+            
+            ax.bar(x - width, df_loja["qt_venda"], width, label="Real", color="gray")
+            ax.bar(x, df_loja["pred_lgbm"], width, label="LightGBM", color="blue")
+            ax.bar(x + width, df_loja["pred_xgb"], width, label="XGBoost", color="orange")
+            
+            ax.set_title(f"Loja: {loja} (Top 20 Skus)")
+            ax.set_xticks(x)
+            ax.set_xticklabels(df_loja["cod_sku"], rotation=90, fontsize=8)
+            ax.set_ylabel("Quantidade")
+            if i == 0:
+                ax.legend()
+                
+        plt.tight_layout()
+        plot_path = os.path.join(self.output_dir, "plot_previsto_x_real.png")
+        plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+        print(f"Plot salvo em: {plot_path}")
+        plt.close()
+
+
 if __name__ == "__main__":
     evaluator = ModelEvaluation()
     df_val = evaluator.generate_metrics()
     evaluator.generate_segmented_metrics(df_val)
     evaluator.plot_residuals(df_val)
     evaluator.plot_feature_importance()
+    evaluator.plot_actual_vs_predicted(df_val, num_lojas=4)

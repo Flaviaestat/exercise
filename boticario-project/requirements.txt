@@ -1,0 +1,10 @@
+pandas
+lightgbm
+xgboost
+scikit-learn
+matplotlib
+seaborn
+optuna
+pulp
+fastapi
+uvicorn
