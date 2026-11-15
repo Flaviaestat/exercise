@@ -103,4 +103,4 @@ def obter_gondola_otimizada(cod_loja: str, ciclo: Optional[int] = 202609):
 if __name__ == "__main__":
     # Para rodar localmente: python api.py
     # Ou via terminal: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("09_api:app", host="0.0.0.0", port=8000, reload=True)

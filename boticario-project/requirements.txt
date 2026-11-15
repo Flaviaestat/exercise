@@ -5,7 +5,8 @@ lightgbm==4.6.0
 xgboost==3.0.5
 optuna==5.0.0
 pulp==4.2.0
-fastapi
+fastapi==0.115.6
 uvicorn==0.54.0
 matplotlib==3.10.7
 seaborn==0.13.2
+tabulate==0.10.0

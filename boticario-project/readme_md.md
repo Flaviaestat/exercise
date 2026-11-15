@@ -77,3 +77,10 @@ Scripts nrs 08 e 09
 python src/08_batch_report_generator.py       
 
 ```
+Para conferir se a api subiu (status 200):
+
+http://0.0.0.0:8000/
+
+E a documentacao no swagger para consulta:
+
+http://127.0.0.1:8000/docs#/
